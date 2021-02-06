@@ -142,6 +142,9 @@
             toggleSearch() {
                 this.showSearchInput = !this.showSearchInput;
                 this.searchText = '';
+                if (this.showSearchInput) {
+                    window.scrollTo(70, document.body.scrollHeight);
+                }
                 setTimeout(() => {
                     this.$refs.search.focus();
                 });
