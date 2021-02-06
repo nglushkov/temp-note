@@ -22,8 +22,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm">
+            <div class="col-4 pr-0">
+                <button class="btn btn-block mt-2 p-3 add-button btn-secondary" @click="toggleSearch()">FIND</button>
+            </div>
+            <div class="col-8">
                 <button class="btn btn-block mt-2 p-3 add-button" :class="[getButtonStyle()]" :disabled="loading || !note.text" @click="createNote">ADD</button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <input type="search" class="form-control search-input" ref="search" :hidden="!showSearchInput" v-model="searchText">
             </div>
         </div>
         <div class="row">
@@ -46,9 +54,16 @@
                 notes: [],
                 note: {
                     text: null,
-                    style: null,
-                }
+                    style: 0,
+                },
+                showSearchInput: false,
+                searchText: '',
             };
+        },
+        watch: {
+            searchText: function () {
+                this.getNotes()
+            },
         },
         mounted() {
             this.focusText();
@@ -61,10 +76,14 @@
                 this.$refs.text.focus();
             },
             getNotes() {
-                axios.get('/notes')
+                let params = {params: {}};
+                if (this.searchText) {
+                    params.params.search = this.searchText;
+                }
+
+                axios.get('/notes', params)
                     .then(response => {
                         this.notes = response.data.data;
-
                     }).catch(error => {
                         alert('Error');
                     });
@@ -91,7 +110,6 @@
                     .then(response => {
                         this.loading = false;
                         this.notes = this.notes.filter(note => note.id !== id);
-                        // this.getNotes();
                     }).catch(error => {
                         alert('Error');
                         this.loading = false;
@@ -121,6 +139,13 @@
                         return 'alert-danger';
                 }
             },
+            toggleSearch() {
+                this.showSearchInput = !this.showSearchInput;
+                this.searchText = '';
+                setTimeout(() => {
+                    this.$refs.search.focus();
+                });
+            },
         },
     }
 </script>
@@ -129,7 +154,7 @@
         font-size: 1.5rem;
         font-weight: bold;
     }
-    .main-input {
+    .main-input, .search-input {
         font-size: 1.1rem;
     }
 </style>

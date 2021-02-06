@@ -14,9 +14,13 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new NoteCollection(NoteModel::orderByDesc('id')->get());
+        $query = NoteModel::orderByDesc('id');
+        if ($request->get('search')) {
+            $query->where('text', 'LIKE', '%' . $request->get('search') . '%');
+        }
+        return new NoteCollection($query->get());
     }
 
     /**

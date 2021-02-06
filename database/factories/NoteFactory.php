@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(NoteModel::class, function (Faker $faker) {
     return [
-        'text' => $faker->text(50)
+        'text' => $faker->text(50),
+        'style' => 0,
     ];
 });
