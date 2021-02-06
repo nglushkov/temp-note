@@ -17,7 +17,8 @@ class Note extends JsonResource
     {
         return [
             'id' => $this->id,
-            'text' => Str::limit($this->text, 40, '...'),
+            'text' => Str::limit($this->text, 35, '...'),
+            'style' => $this->style,
         ];
     }
 }

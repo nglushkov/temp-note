@@ -63,14 +63,8 @@ class NoteController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\NoteModel  $note
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(NoteModel $note)
     {
-        //
+        $note->delete();
     }
 }
