@@ -1,22 +1,30 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-sm">Colors</div>
-        </div>
-        <div class="row">
             <div class="col-sm">
-                <textarea rows="10" class="form-control" v-model="note.text" ref="text"></textarea>
+                <h1 class="font-weight-bold mt-2">TempNote</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-sm">
+                <textarea rows="7" class="form-control main-input" v-model="note.text" ref="text"></textarea>
+            </div>
+        </div>
+        <div class="row">
+<!--            <div class="col-sm-4">-->
+<!--                <button class="btn btn-block btn-success mt-2 p-3 add-button" :disabled="loading || !note.text" @click="createNote">ADD</button>-->
+<!--            </div>-->
+            <div class="col-4 pr-1">
+                <button class="btn btn-block bg-secondary text-white mt-2 p-3 color-button">...</button>
+            </div>
+            <div class="col-8 pl-1">
                 <button class="btn btn-block btn-success mt-2 p-3 add-button" :disabled="loading || !note.text" @click="createNote">ADD</button>
             </div>
         </div>
         <div class="row">
             <div class="col-sm mt-2">
                 <div class="alert alert-secondary p-1" v-for="note in notes">
-                    <strong>{{ note.id }}</strong>&nbsp;<span>{{ note.text }}</span>
+                    <span>{{ note.text }}</span>
                 </div>
             </div>
         </div>
@@ -61,7 +69,7 @@
                         this.note.text = '';
                         this.focusText();
                     }).catch(error => {
-                        alert('Erasror');
+                        alert('Error');
                         this.loading = false;
                     });
             },

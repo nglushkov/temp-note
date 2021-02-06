@@ -1965,6 +1965,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2007,7 +2015,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.focusText();
       })["catch"](function (error) {
-        alert('Erasror');
+        alert('Error');
         _this2.loading = false;
       });
     }
@@ -37682,8 +37690,8 @@ var render = function() {
             }
           ],
           ref: "text",
-          staticClass: "form-control",
-          attrs: { rows: "10" },
+          staticClass: "form-control main-input",
+          attrs: { rows: "7" },
           domProps: { value: _vm.note.text },
           on: {
             input: function($event) {
@@ -37698,7 +37706,9 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-8 pl-1" }, [
         _c(
           "button",
           {
@@ -37717,8 +37727,6 @@ var render = function() {
         { staticClass: "col-sm mt-2" },
         _vm._l(_vm.notes, function(note) {
           return _c("div", { staticClass: "alert alert-secondary p-1" }, [
-            _c("strong", [_vm._v(_vm._s(note.id))]),
-            _vm._v(" "),
             _c("span", [_vm._v(_vm._s(note.text))])
           ])
         }),
@@ -37733,7 +37741,24 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm" }, [_vm._v("Colors")])
+      _c("div", { staticClass: "col-sm" }, [
+        _c("h1", { staticClass: "font-weight-bold mt-2" }, [_vm._v("TempNote")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4 pr-1" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "btn btn-block bg-secondary text-white mt-2 p-3 color-button"
+        },
+        [_vm._v("...")]
+      )
     ])
   }
 ]
@@ -50151,8 +50176,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/vagrant/projects/temp-note/temp-note/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/vagrant/projects/temp-note/temp-note/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\nikita\projects\temp-note\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\nikita\projects\temp-note\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

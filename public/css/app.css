@@ -10944,8 +10944,13 @@ a.text-dark:focus {
   }
 }
 
-.add-button {
+.add-button,
+.color-button {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.main-input {
+  font-size: 1.1rem;
 }
 
