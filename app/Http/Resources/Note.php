@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
 
 class Note extends JsonResource
 {
@@ -17,7 +16,7 @@ class Note extends JsonResource
     {
         return [
             'id' => $this->id,
-            'text' => Str::limit($this->text, 35, '...'),
+            'text' => $this->text,
             'priority' => $this->priority,
         ];
     }

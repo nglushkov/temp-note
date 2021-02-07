@@ -1,5 +1,17 @@
 <template>
     <div class="container">
+        <modal name="my-first-modal" styles="padding: 10px;" height="auto" :adaptive="true">
+            <p>{{ currentNote ? currentNote.text : '' }}</p>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-block btn-danger text-white" @click="deleteNote(currentNote.id); $modal.hide('my-first-modal')">DELETE</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-block btn-secondary text-white" @click="$modal.hide('my-first-modal')">CLOSE</button>
+                </div>
+            </div>
+        </modal>
+
         <div class="row">
             <div class="col-sm">
                 <h1 class="font-weight-bold mt-2 mb-0">TempNote</h1>
@@ -7,13 +19,13 @@
         </div>
         <div class="row mt-2">
             <div class="col-4 pr-1">
-                <button class="btn btn-block btn-secondary text-white p-3 color-button" @click="note.priority = 0"></button>
+                <button class="btn btn-block btn-secondary text-white p-3 priority-button" @click="note.priority = 0"></button>
             </div>
             <div class="col-4 pl-1 pr-1">
-                <button class="btn btn-block btn-info text-white p-3 color-button" @click="note.priority = 1"></button>
+                <button class="btn btn-block btn-info text-white p-3 priority-button" @click="note.priority = 1"></button>
             </div>
             <div class="col-4 pl-1">
-                <button class="btn btn-block btn-danger text-white p-3 color-button" @click="note.priority = 2"></button>
+                <button class="btn btn-block btn-danger text-white p-3 priority-button" @click="note.priority = 2"></button>
             </div>
         </div>
         <div class="row mt-2">
@@ -36,9 +48,11 @@
         </div>
         <div class="row">
             <div class="col-sm mt-2">
-                <div class="alert p-1" :class="[getNoteStyle(note.priority)]" v-for="note in filteredNotes">
-                    <span>{{ note.text }}</span>
-                    <button type="button" class="close" @click="deleteNote(note.id)">
+                <div v-for="note in filteredNotes" class="position-relative">
+                    <div class="alert p-1" :class="[getNoteStyle(note.priority)]" @click="selectNote(note.id)">
+                        <span>{{ note.text | cut }}</span>
+                    </div>
+                    <button type="button" class="close delete-note" @click="deleteNote(note.id)">
                         <span>&times;</span>
                     </button>
                 </div>
@@ -58,7 +72,22 @@
                 },
                 showSearchInput: false,
                 searchText: '',
+                currentNote: null,
+                showCurrentNote: false,
             };
+        },
+        filters: {
+            cut: function (value) {
+                if (!value) {
+                    return '';
+                }
+                const length = 30;
+                let concat = '';
+                if (value.length > length) {
+                    concat = '...';
+                }
+                return value.toString().slice(0, length).concat(concat);
+            }
         },
         computed: {
             filteredNotes: function () {
@@ -144,13 +173,23 @@
                     this.$refs.search.focus();
                 });
             },
+            selectNote(id) {
+                this.currentNote = this.notes.filter(note => note.id === id)[0];
+                this.$modal.show('my-first-modal')
+            },
         },
     }
 </script>
 <style lang="scss">
-    .add-button, .color-button {
+    .add-button, .priority-button {
         font-size: 1.5rem;
         font-weight: bold;
+    }
+    .delete-note {
+        position: absolute;
+        right: 5px;
+        padding: 5px !important;
+        top: 0;
     }
     .main-input, .search-input {
         font-size: 1.1rem;

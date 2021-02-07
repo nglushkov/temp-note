@@ -28,6 +28,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 import App from './views/App';
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal)
 
 const app = new Vue({
     el: '#app',
