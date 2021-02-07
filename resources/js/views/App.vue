@@ -81,7 +81,7 @@
                 if (!value) {
                     return '';
                 }
-                const length = 30;
+                const length = 35;
                 let concat = '';
                 if (value.length > length) {
                     concat = '...';
