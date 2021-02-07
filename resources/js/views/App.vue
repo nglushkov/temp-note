@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div class="col-sm mt-2">
-                <div class="alert p-1" :class="[getNoteStyle(note.style)]" v-for="note in notes">
+                <div class="alert p-1" :class="[getNoteStyle(note.style)]" v-for="note in filteredNotes">
                     <span>{{ note.text }}</span>
                     <button type="button" class="close" @click="deleteNote(note.id)">
                         <span>&times;</span>
@@ -60,9 +60,9 @@
                 searchText: '',
             };
         },
-        watch: {
-            searchText: function () {
-                this.getNotes()
+        computed: {
+            filteredNotes: function () {
+                return this.notes.filter(note => note.text.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1);
             },
         },
         mounted() {
@@ -76,12 +76,7 @@
                 this.$refs.text.focus();
             },
             getNotes() {
-                let params = {params: {}};
-                if (this.searchText) {
-                    params.params.search = this.searchText;
-                }
-
-                axios.get('/notes', params)
+                axios.get('/notes')
                     .then(response => {
                         this.notes = response.data.data;
                     }).catch(error => {
