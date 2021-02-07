@@ -48,13 +48,13 @@
         </div>
         <div class="row">
             <div class="col-sm mt-2">
-                <div v-for="note in filteredNotes" class="position-relative">
+                <div v-for="(note, index) in filteredNotes" class="position-relative">
+                    <p class="mb-1 small text-secondary" v-if="canShowTimeAgo(index, note)">
+                        <timeago :datetime="note.created_at" :auto-update="60"></timeago>
+                    </p>
                     <div class="alert p-1" :class="[getNoteStyle(note.priority)]" @click="selectNote(note.id)">
-                        <span>{{ note.text | cut }}</span>
+                        <span>{{ note.text | shortenText(85) }}</span>
                     </div>
-                    <button type="button" class="close delete-note" @click="deleteNote(note.id)">
-                        <span>&times;</span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -74,20 +74,20 @@
                 searchText: '',
                 currentNote: null,
                 showCurrentNote: false,
+                handledNote: null,
             };
         },
         filters: {
-            cut: function (value) {
+            shortenText: function (value, length) {
                 if (!value) {
                     return '';
                 }
-                const length = 35;
                 let concat = '';
                 if (value.length > length) {
                     concat = '...';
                 }
                 return value.toString().slice(0, length).concat(concat);
-            }
+            },
         },
         computed: {
             filteredNotes: function () {
@@ -177,6 +177,10 @@
                 this.currentNote = this.notes.filter(note => note.id === id)[0];
                 this.$modal.show('my-first-modal')
             },
+            canShowTimeAgo(index, note) {
+                return index === 0 ||
+                    (typeof this.notes[index - 1] !== 'undefined' && this.notes[index - 1].created_at !== note.created_at)
+            },
         },
     }
 </script>
@@ -184,12 +188,6 @@
     .add-button, .priority-button {
         font-size: 1.5rem;
         font-weight: bold;
-    }
-    .delete-note {
-        position: absolute;
-        right: 5px;
-        padding: 5px !important;
-        top: 0;
     }
     .main-input, .search-input {
         font-size: 1.1rem;

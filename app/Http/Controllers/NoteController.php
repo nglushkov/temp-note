@@ -16,7 +16,7 @@ class NoteController extends Controller
      */
     public function index(Request $request)
     {
-        $query = NoteModel::orderByDesc('id');
+        $query = NoteModel::orderByDesc('created_at');
         if ($request->get('search')) {
             $query->where('text', 'LIKE', '%' . $request->get('search') . '%');
         }
