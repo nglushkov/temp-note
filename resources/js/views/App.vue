@@ -52,7 +52,7 @@
                     <p class="mb-1 small text-secondary" v-if="canShowTimeAgo(index, note)">
                         {{ note.created_at | timeAgo }}
                     </p>
-                    <div class="alert p-1" :class="[getNoteStyle(note.priority)]" @click="selectNote(note.id)">
+                    <div class="alert p-1 note" :class="[getNoteStyle(note.priority)]" @click="selectNote(note.id)">
                         <span>{{ note.text | shortenText(85) }}</span>
                     </div>
                 </div>
@@ -194,7 +194,13 @@
         font-size: 1.5rem;
         font-weight: bold;
     }
+    .priority-button {
+        height: 50px;
+    }
     .main-input, .search-input {
         font-size: 1.1rem;
+    }
+    .note {
+        cursor: pointer;
     }
 </style>
