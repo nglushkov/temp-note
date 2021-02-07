@@ -7,18 +7,18 @@
         </div>
         <div class="row mt-2">
             <div class="col-4 pr-1">
-                <button class="btn btn-block btn-secondary text-white p-3 color-button" @click="note.style = 0"></button>
+                <button class="btn btn-block btn-secondary text-white p-3 color-button" @click="note.priority = 0"></button>
             </div>
             <div class="col-4 pl-1 pr-1">
-                <button class="btn btn-block btn-info text-white p-3 color-button" @click="note.style = 1"></button>
+                <button class="btn btn-block btn-info text-white p-3 color-button" @click="note.priority = 1"></button>
             </div>
             <div class="col-4 pl-1">
-                <button class="btn btn-block btn-danger text-white p-3 color-button" @click="note.style = 2"></button>
+                <button class="btn btn-block btn-danger text-white p-3 color-button" @click="note.priority = 2"></button>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-sm">
-                <textarea rows="7" class="form-control main-input" v-model="note.text" ref="text"></textarea>
+                <textarea maxlength="300" rows="7" class="form-control main-input" v-model="note.text" ref="text"></textarea>
             </div>
         </div>
         <div class="row">
@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div class="col-sm mt-2">
-                <div class="alert p-1" :class="[getNoteStyle(note.style)]" v-for="note in filteredNotes">
+                <div class="alert p-1" :class="[getNoteStyle(note.priority)]" v-for="note in filteredNotes">
                     <span>{{ note.text }}</span>
                     <button type="button" class="close" @click="deleteNote(note.id)">
                         <span>&times;</span>
@@ -54,7 +54,7 @@
                 notes: [],
                 note: {
                     text: null,
-                    style: 0,
+                    priority: 0,
                 },
                 showSearchInput: false,
                 searchText: '',
@@ -111,7 +111,7 @@
                     });
             },
             getButtonStyle() {
-                switch (this.note.style) {
+                switch (this.note.priority) {
                     case null:
                         return 'btn-secondary';
                     case 0:
@@ -122,8 +122,8 @@
                         return 'btn-danger';
                 }
             },
-            getNoteStyle(style) {
-                switch (style) {
+            getNoteStyle(priority) {
+                switch (priority) {
                     case null:
                         return 'alert-secondary';
                     case 0:
