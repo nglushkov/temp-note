@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-        <modal name="my-first-modal" styles="padding: 10px;" height="auto" :adaptive="true">
-            <p>{{ currentNote ? currentNote.text : '' }}</p>
+        <modal name="note-modal" styles="padding: 10px;" height="auto" :adaptive="true">
+            <p class="modal-note-text">{{ currentNote ? currentNote.text : '' }}</p>
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-block btn-danger text-white" @click="deleteNote(currentNote.id); $modal.hide('my-first-modal')">DELETE</button>
+                    <button class="btn btn-block btn-danger text-white" @click="deleteNote(currentNote.id); $modal.hide('note-modal')">DELETE</button>
                 </div>
                 <div class="col">
-                    <button class="btn btn-block btn-secondary text-white" @click="$modal.hide('my-first-modal')">CLOSE</button>
+                    <button class="btn btn-block btn-secondary text-white" @click="$modal.hide('note-modal')">CLOSE</button>
                 </div>
             </div>
         </modal>
@@ -26,6 +26,11 @@
             </div>
             <div class="col-4 pl-1">
                 <button class="btn btn-block btn-danger text-white p-3 priority-button" @click="note.priority = 2"></button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm">
+                <p class="m-0 text-secondary">{{ note.text.length }} из 300</p>
             </div>
         </div>
         <div class="row mt-2">
@@ -69,7 +74,7 @@
                 loading: false,
                 notes: [],
                 note: {
-                    text: null,
+                    text: '',
                     priority: 0,
                 },
                 showSearchInput: false,
@@ -174,7 +179,7 @@
             },
             selectNote(id) {
                 this.currentNote = this.notes.filter(note => note.id === id)[0];
-                this.$modal.show('my-first-modal')
+                this.$modal.show('note-modal')
             },
             canShowTimeAgo(index, note) {
                 if (index === 0) {
@@ -202,5 +207,8 @@
     }
     .note {
         cursor: pointer;
+    }
+    .modal-note-text {
+        white-space: pre-line;
     }
 </style>
