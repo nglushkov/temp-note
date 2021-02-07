@@ -30,7 +30,7 @@
         </div>
         <div class="row mt-2">
             <div class="col-sm">
-                <textarea maxlength="300" rows="7" class="form-control main-input" v-model="note.text" ref="text"></textarea>
+                <textarea maxlength="300" rows="7" class="form-control main-input" v-model="note.text"></textarea>
             </div>
         </div>
         <div class="row">
@@ -100,16 +100,10 @@
                 return this.notes.filter(note => note.text.toLowerCase().indexOf(this.searchText.toLowerCase()) > -1);
             },
         },
-        mounted() {
-            this.focusText();
-        },
         created() {
             this.getNotes();
         },
         methods: {
-            focusText() {
-                this.$refs.text.focus();
-            },
             getNotes() {
                 axios.get('/notes')
                     .then(response => {
@@ -125,7 +119,6 @@
                         this.loading = false;
                         this.getNotes();
                         this.note.text = '';
-                        this.focusText();
                     }).catch(error => {
                         alert('Error');
                         this.loading = false;
