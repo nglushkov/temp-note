@@ -9,5 +9,6 @@ $factory->define(NoteModel::class, function (Faker $faker) {
     return [
         'text' => $faker->text(50),
         'priority' => 0,
+        'created_at' => $faker->dateTimeBetween('-2 month'),
     ];
 });

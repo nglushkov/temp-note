@@ -29,17 +29,12 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 import App from './views/App';
 import VModal from 'vue-js-modal'
-import VueTimeago from 'vue-timeago'
+import TimeAgo from 'javascript-time-ago'
+import ru from 'javascript-time-ago/locale/ru'
 
 Vue.use(VModal);
 
-Vue.use(VueTimeago, {
-    name: 'Timeago',
-    locale: 'ru',
-    locales: {
-        ru: require('date-fns/locale/ru')
-    }
-});
+TimeAgo.addDefaultLocale(ru);
 
 const app = new Vue({
     el: '#app',

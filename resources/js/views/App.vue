@@ -50,7 +50,7 @@
             <div class="col-sm mt-2">
                 <div v-for="(note, index) in filteredNotes" class="position-relative">
                     <p class="mb-1 small text-secondary" v-if="canShowTimeAgo(index, note)">
-                        <timeago :datetime="note.created_at" :auto-update="60"></timeago>
+                        {{ note.created_at | timeAgo }}
                     </p>
                     <div class="alert p-1" :class="[getNoteStyle(note.priority)]" @click="selectNote(note.id)">
                         <span>{{ note.text | shortenText(85) }}</span>
@@ -61,6 +61,8 @@
     </div>
 </template>
 <script>
+    import TimeAgo from 'javascript-time-ago'
+
     export default {
         data() {
             return {
@@ -87,6 +89,10 @@
                     concat = '...';
                 }
                 return value.toString().slice(0, length).concat(concat);
+            },
+            timeAgo: function (value) {
+                const timeAgo = new TimeAgo();
+                return timeAgo.format(new Date(Date.parse(value)));
             },
         },
         computed: {
@@ -178,8 +184,14 @@
                 this.$modal.show('my-first-modal')
             },
             canShowTimeAgo(index, note) {
-                return index === 0 ||
-                    (typeof this.notes[index - 1] !== 'undefined' && this.notes[index - 1].created_at !== note.created_at)
+                if (index === 0) {
+                    return true;
+                }
+                const timeAgo = new TimeAgo();
+                let previousNoteTimeAgo = timeAgo.format(new Date(Date.parse(this.notes[index - 1].created_at)))
+                let noteTimeAgo = timeAgo.format(new Date(Date.parse(note.created_at)))
+
+                return previousNoteTimeAgo !== noteTimeAgo;
             },
         },
     }
