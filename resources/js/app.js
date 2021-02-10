@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import Vue from "vue";
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -20,23 +22,35 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('login-form', require('./components/LoginForm.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-import App from './views/App';
 import VModal from 'vue-js-modal'
 import TimeAgo from 'javascript-time-ago'
 import ru from 'javascript-time-ago/locale/ru'
+import {store} from './store';
+import axios from "axios";
+import App from "./views/App";
+import {router} from './router';
+import VueRouter from "vue-router";
 
+
+Vue.prototype.$http = axios;
 Vue.use(VModal);
+Vue.use(VueRouter);
 
 TimeAgo.addDefaultLocale(ru);
+
+const token = localStorage.getItem('token')
+if (token) {
+    Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+}
+
+let loggedIn = !!token;
+store.commit('currentUser/setLoggedIn', loggedIn);
 
 const app = new Vue({
     el: '#app',
     components: { App },
+    router,
+    store,
 });
